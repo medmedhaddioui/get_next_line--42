@@ -75,6 +75,23 @@ char *get_next_line(int fd)
 	return str;  
     
 }
+char *get_next_line(int fd)
+{
+    char *buf;
+        static char *str;
+    int chars_read;
+
+        buf = ft_calloc(sizeof(char) * BUFFER_SIZE);
+        if (buf == NULL)
+        return NULL;
+        chars_read  = read (fd, buf, BUFFER_SIZE);
+        if (chars_read <= 0)
+        return
+        ft_memcpy(str,buf,BUFFER_SIZE);
+        ft_strjoin(str,str);
+        return str;
+
+}
 int main ()
 {
 	int fd;
