@@ -48,8 +48,12 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		total_len;
 	char	*new_str;
 
-	if (!s1 || !s2)
+	if (!s1 && !s2)
 		return (NULL);
+	if (!s1)
+	return ft_strdup(s2);
+	if (!s2)
+	return ft_strdup(s1);
 	len_s1 = ft_strlen(s1);
 	len_s2 = ft_strlen(s2);
 	total_len = len_s1 + len_s2;
@@ -64,34 +68,21 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 char *get_next_line(int fd)
 {
-    char buf [BUFFER_SIZE];
-    static char *str;
-    int chars_read;
-   	chars_read  = read (fd, buf, BUFFER_SIZE);
-	
-	if (chars_read != 0)
-	ft_memcpy(str,buf,BUFFER_SIZE);
-	ft_strjoin(str,str);
-	return str;  
-    
-}
-char *get_next_line(int fd)
-{
+	if (fd < 0)
+	return NULL;
     char *buf;
-        static char *str;
+	char *str;
+	char *s1;
     int chars_read;
-
-        buf = ft_calloc(sizeof(char) * BUFFER_SIZE);
-        if (buf == NULL)
-        return NULL;
-        chars_read  = read (fd, buf, BUFFER_SIZE);
-        if (chars_read <= 0)
-        return
-        ft_memcpy(str,buf,BUFFER_SIZE);
-        ft_strjoin(str,str);
-        return str;
-
+	chars_read = read (fd, buf, BUFFER_SIZE);
+	if (chars_read == -1)
+	return (-1);
+	if (buf == 0)
+	return str;
+	str = ft_strjoin(s1,buf);
+	return str;  
 }
+
 int main ()
 {
 	int fd;
