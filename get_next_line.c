@@ -6,86 +6,83 @@
 /*   By: mel-hadd <mel-hadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 14:27:19 by mel-hadd          #+#    #+#             */
-/*   Updated: 2023/12/01 13:52:08 by mel-hadd         ###   ########.fr       */
+/*   Updated: 2023/12/10 20:57:20 by mel-hadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
+int	found_newline(char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0')
+	{
+		if (str[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	count(char *buff)
+{
+	int	i;
+
+	i = 0;
+	while (buff[i] != '\0' && buff[i] != '\n')
 		i++;
 	return (i);
 }
-void	*ft_memcpy(void *dest, const void *src, size_t n)
-{
-	size_t			i;
-	unsigned char	*dst;
+// char	*read_file(int fd, char *buff)
+// {
+// 	int		readed;
+// 	char	*str;
 
-	if (!dest && !src)
-		return (NULL);
-	if (dest == src)
-		return (dest);
-	i = 0;
-	dst = (unsigned char *)dest;
-	while (i < n)
-	{
-		*dst = *(unsigned char *)src;
-		i++;
-		dst++;
-		src++;
-	}
-	return (dest);
-}
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	int		len_s1;
-	int		len_s2;
-	int		total_len;
-	char	*new_str;
+// 	str = ft_strdup("");
+	
+// 	return (buff);
+// }
 
-	if (!s1 && !s2)
-		return (NULL);
-	if (!s1)
-	return ft_strdup(s2);
-	if (!s2)
-	return ft_strdup(s1);
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	total_len = len_s1 + len_s2;
-	new_str = (char *)malloc(total_len * sizeof(char) + 1);
-	if (new_str == NULL)
-		return (NULL);
-	ft_memcpy(new_str, s1, len_s1);
-	ft_memcpy(new_str + len_s1, s2, len_s2);
-	new_str[total_len] = '\0';
-	return (new_str);
-}
-
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	if (fd < 0)
-	return NULL;
-    char *buf;
+	static char	*buff;
+	char		*line;
+	int			len;
 	char *str;
-	char *s1;
-    int chars_read;
-	chars_read = read (fd, buf, BUFFER_SIZE);
-	if (chars_read == -1)
-	return (-1);
-	if (buf == 0)
-	return str;
-	str = ft_strjoin(s1,buf);
-	return str;  
-}
-
-int main ()
-{
-	int fd;
-	fd = open("file.txt", O_RDONLY);
-	get_next_line(fd);
+	int readed;
+	
+	len = 0;
+	str = ft_strdup("");
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	while (!found_newline(str) && readed != 0)
+	{
+		str = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		if (!str)
+			return (NULL);
+		readed = read(fd, str, BUFFER_SIZE);
+		if (readed < 0)
+		{
+			free(str);
+			return (NULL);
+		}
+		str[readed] = '\0';
+		buff = ft_strjoin(buff, str);
+	}
+	if (readed == 0 && buff[0] == '\0')
+	{
+		free(buff);
+		buff = NULL;
+		return (0);
+	}
+	if (!buff)
+		return (NULL);
+	free(str);
+	// buff = read_file(fd, buff);
+	len = count(buff);
+	line = ft_substr(buff, 0, len + 1);
+	buff = ft_substr(buff, len + 1, ft_strlen(buff));
+	return (line);
 }
