@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-hadd <mel-hadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 14:27:29 by mel-hadd          #+#    #+#             */
-/*   Updated: 2023/12/11 18:07:12 by mel-hadd         ###   ########.fr       */
+/*   Created: 2023/12/11 15:18:17 by mel-hadd          #+#    #+#             */
+/*   Updated: 2023/12/11 15:18:31 by mel-hadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+
+#include "get_next_line_bonus.h"
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
@@ -56,7 +57,6 @@ char	*ft_strdup(const char *s)
 	tab[len] = '\0';
 	return (tab);
 }
-
 char	*ft_strjoin(char *s1, char const *s2)
 {
 	int		len_s1;
