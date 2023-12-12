@@ -6,7 +6,7 @@
 /*   By: mel-hadd <mel-hadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:19:34 by mel-hadd          #+#    #+#             */
-/*   Updated: 2023/12/11 16:03:24 by mel-hadd         ###   ########.fr       */
+/*   Updated: 2023/12/12 13:28:26 by mel-hadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,80 +35,61 @@ int	count(char *buff)
 		i++;
 	return (i);
 }
-// char	*read_file(int fd, char *buff)
-// {
-// 	int		readed;
-// 	char	*str;
 
-// 	str = ft_strdup("");
-// while (!found_newline(str) && readed != 0)
-// {
-// 	str = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-// 	if (!str)
-// 		return (NULL);
-// 	readed = read(fd, str, BUFFER_SIZE);
-// 	if (readed < 0)
-// 	{
-// 		free(str);
-// 		return (NULL);
-// 	}
-// 	str[readed] = '\0';
-// 	buff = ft_strjoin(buff, str);
-// }
-// if (readed == 0 && buff[0] == '\0')
-// {
-// 	free(buff);
-// 	buff = NULL;
-// 	return (0);
-// }
-// if (!buff)
-// 	return (NULL);
-// free(str);
-// 	return (buff);
-// }
-
-char	*get_next_line(int fd)
+char	*read_file(int fd, char *buff)
 {
-	static char *buff;
-	char		*line;
-	int			len;
-	char		*str;
-	int			readed;
-	char *tmp;
+	char	*str;
+	int		readed;
 
 	str = NULL;
 	readed = 1;
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
 	while (!found_newline(str) && readed != 0)
 	{
 		if (str)
-		free(str);
+			free(str);
 		str = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!str)
 			return (NULL);
 		readed = read(fd, str, BUFFER_SIZE);
 		if (readed < 0)
-		{
-			free(str);
-			free(buff);
-			buff = NULL;
-			return (NULL);
-		}
-		str [readed] = '\0';
+			return (free(str), free(buff), buff = NULL, NULL);
+		str[readed] = '\0';
 		buff = ft_strjoin(buff, str);
 	}
 	free(str);
 	if (readed == 0 && (!buff || buff[0] == '\0'))
-	{
-		free(buff);
-		buff = NULL;
-		return (0);
-	}
-	len = count(buff);
-	line = ft_substr(buff, 0, len + 1);
-	tmp = buff;
-	buff = ft_substr(buff, len + 1, ft_strlen(buff));
+		return (free(buff), buff = NULL, NULL);
+	return (buff);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*buff[1024];
+	char		*line;
+	int			len;
+	char		*tmp;
+	char		*s1;
+
+	s1 = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	buff[fd] = read_file(fd, buff[fd]);
+	if (!buff[fd])
+		return (NULL);
+	len = count(buff[fd]);
+	line = ft_substr(buff[fd], 0, len + 1);
+	tmp = buff[fd];
+	buff[fd] = ft_substr(buff[fd], len + 1, ft_strlen(buff[fd]));
 	free(tmp);
 	return (line);
 }
+
+// int main ()
+// {
+// 	int fd;
+// 	int fd1;
+// 	fd = open ("file.txt", O_RDONLY);
+// 	fd1 = open ("file1.txt", O_RDONLY);
+// 	printf("%s",get_next_line(fd));
+// 	printf("%s",get_next_line(fd1));
+// }

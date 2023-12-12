@@ -6,7 +6,7 @@
 /*   By: mel-hadd <mel-hadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 14:27:19 by mel-hadd          #+#    #+#             */
-/*   Updated: 2023/12/11 18:47:30 by mel-hadd         ###   ########.fr       */
+/*   Updated: 2023/12/11 19:08:39 by mel-hadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*read_file(int fd, char *buff)
 {
 	char	*str;
 	int		readed;
+
 	str = NULL;
 	readed = 1;
 	while (!found_newline(str) && readed != 0)
@@ -74,7 +75,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	buff = read_file(fd, buff);
 	if (!buff)
-	return NULL;
+		return (NULL);
 	len = count(buff);
 	line = ft_substr(buff, 0, len + 1);
 	tmp = buff;
