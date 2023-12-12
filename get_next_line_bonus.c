@@ -62,6 +62,7 @@ char	*read_file(int fd, char *buff)
 	return (buff);
 }
 
+
 char	*get_next_line(int fd)
 {
 	static char	*buff[1024];
