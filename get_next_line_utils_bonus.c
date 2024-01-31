@@ -6,10 +6,9 @@
 /*   By: mel-hadd <mel-hadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:18:17 by mel-hadd          #+#    #+#             */
-/*   Updated: 2023/12/11 15:18:31 by mel-hadd         ###   ########.fr       */
+/*   Updated: 2023/12/13 09:39:40 by mel-hadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "get_next_line_bonus.h"
 
@@ -57,6 +56,7 @@ char	*ft_strdup(const char *s)
 	tab[len] = '\0';
 	return (tab);
 }
+
 char	*ft_strjoin(char *s1, char const *s2)
 {
 	int		len_s1;

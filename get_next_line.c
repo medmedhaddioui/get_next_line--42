@@ -6,7 +6,7 @@
 /*   By: mel-hadd <mel-hadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 14:27:19 by mel-hadd          #+#    #+#             */
-/*   Updated: 2023/12/11 19:08:39 by mel-hadd         ###   ########.fr       */
+/*   Updated: 2023/12/14 12:34:25 by mel-hadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*read_file(int fd, char *buff)
 	{
 		if (str)
 			free(str);
-		str = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		str = malloc(sizeof(char) * BUFFER_SIZE + 1);
 		if (!str)
 			return (NULL);
 		readed = read(fd, str, BUFFER_SIZE);
@@ -71,7 +71,7 @@ char	*get_next_line(int fd)
 	char		*s1;
 
 	s1 = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= INT_MAX)
 		return (NULL);
 	buff = read_file(fd, buff);
 	if (!buff)

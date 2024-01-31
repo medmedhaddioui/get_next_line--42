@@ -6,7 +6,7 @@
 /*   By: mel-hadd <mel-hadd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:19:34 by mel-hadd          #+#    #+#             */
-/*   Updated: 2023/12/12 13:28:26 by mel-hadd         ###   ########.fr       */
+/*   Updated: 2023/12/14 12:38:45 by mel-hadd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*read_file(int fd, char *buff)
 	{
 		if (str)
 			free(str);
-		str = malloc(sizeof(char) * (BUFFER_SIZE + 1));
+		str = malloc(sizeof(char) * BUFFER_SIZE + 1);
 		if (!str)
 			return (NULL);
 		readed = read(fd, str, BUFFER_SIZE);
@@ -62,7 +62,6 @@ char	*read_file(int fd, char *buff)
 	return (buff);
 }
 
-
 char	*get_next_line(int fd)
 {
 	static char	*buff[1024];
@@ -72,7 +71,7 @@ char	*get_next_line(int fd)
 	char		*s1;
 
 	s1 = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= INT_MAX)
 		return (NULL);
 	buff[fd] = read_file(fd, buff[fd]);
 	if (!buff[fd])
@@ -84,13 +83,3 @@ char	*get_next_line(int fd)
 	free(tmp);
 	return (line);
 }
-
-// int main ()
-// {
-// 	int fd;
-// 	int fd1;
-// 	fd = open ("file.txt", O_RDONLY);
-// 	fd1 = open ("file1.txt", O_RDONLY);
-// 	printf("%s",get_next_line(fd));
-// 	printf("%s",get_next_line(fd1));
-// }
